@@ -1,0 +1,42 @@
+li {
+    list-style-type: none;
+}
+
+.rating {
+    position: relative;
+    left: 35px;
+    top: 5px;
+}
+
+.tooltip-container {
+    text-align:center;
+    padding:30px;
+}
+
+.tooltip-img {
+    float: left;
+    padding:15px;
+}
+
+.tooltip-description {
+    display:inline-block;
+}
+
+.a {
+    color: black;
+    position:relative;
+    left:30%;
+}
+
+.myBtn {
+    /*transform: translateX(340px) translateY(1750px) scale(1) !important;*/
+    margin-left: 42%;
+    padding:20px;
+    background-color: #79ABFF;
+    transition: .5s;
+}
+
+.myBtn:hover {
+    background-color: #86E57F;
+    transition: .5s
+}
