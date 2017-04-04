@@ -2,7 +2,6 @@ import React from 'react';
 
 import Movies from '../Movies';
 import RESOURCES from '../../resources/API_KEY';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import '../../style/Home.css';
 
 const propTypes = {

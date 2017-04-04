@@ -67,6 +67,23 @@ export function fetchDataSuccess(data) {
     }
 }
 
+export function fetchtest(url){
+    return (dispatch) => {
+        fetch(url)
+        .then((response) => {
+            if(!response.ok){
+                throw Error(response.statusText);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(JSON.stringify(data));
+        })
+        .catch(() => console.log('fail'));
+    };
+}
+
 export function fetchData(url) {
     return (dispatch) => {
             fetch(url)

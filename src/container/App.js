@@ -7,6 +7,8 @@ import Home from '../components/views/Home';
 import About from '../components/views/About';
 import * as actions from '../actions';
 
+import Test from './Test';
+
 class App extends React.Component {
   
   constructor(props){
@@ -111,7 +113,7 @@ class App extends React.Component {
                   <div className="container">
                       <About msg='About2.js' movie_personal={this.props.movie_personal} currentIndex={this.props.currentIndex}
                       selectedMovie={this.props.selectedMovie} selectedMovieRating={this.props.selectedMovieRating} movieData={this.props.movieData}
-                      setRating={this.props.setRating}/>
+                      setRating={this.props.setRating} fetchtest={this.props.fetchtest}/>
                   </div>
                 </div>
                 <div className="page" id="p4">
@@ -121,6 +123,7 @@ class App extends React.Component {
                       <a href="https://dribbble.com/albertohartzet" target="_blank">Im ready to play, <span className="hint line-trough">invite me </span> find me</a>
                     </p>
                     <p className="hint">Already invited by <a href="http://www.dribbble.com/mrpeters" target="_blank">Stan Peters</a></p>
+                    <Test />
                   </section>
                 </div> 
                 <div className="page" id="p5">
@@ -162,7 +165,8 @@ const mapDispatchToProps = (dispatch) => {
     emptyMovies: () => {dispatch(actions.movieEmpty())},
     fetchData: (url) => {dispatch(actions.fetchData(url))},
     selectedMovie: (data, currentIndex) => {dispatch(actions.moviePersonal(data, currentIndex))},
-    selectedMovieRating: (genre, index, stars) => {dispatch(actions.moviePersonalRating(genre, index, stars))}
+    selectedMovieRating: (genre, index, stars) => {dispatch(actions.moviePersonalRating(genre, index, stars))},
+    fetchtest: (url) => {dispatch(actions.fetchtest(url))}
   };
 };
 

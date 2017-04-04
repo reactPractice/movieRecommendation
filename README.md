@@ -2,6 +2,7 @@ Application API Docs - https://developers.themoviedb.org/3/movies/get-top-rated-
 API library docs - https://github.com/cavestri/themoviedb-javascript-library/wiki/Movies
 Configuration info - http://api.themoviedb.org/3/configuration?api_key=268d70c982dabbd56d9db882a7112594
 React-stonecutter - https://github.com/dantrain/react-stonecutter
+heroku guide - http://poiemaweb.com/nodejs-heroku
 
 ==================================================================================
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

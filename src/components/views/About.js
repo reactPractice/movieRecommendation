@@ -8,7 +8,8 @@ const propTypes = {
     movie_personal: React.PropTypes.array,
     selectedMovie: React.PropTypes.func,
     selectedMovieRating: React.PropTypes.func,
-    setRating: React.PropTypes.func
+    setRating: React.PropTypes.func,
+    fetchtest: React.PropTypes.func
 };
 
 const defaultProps = {
@@ -24,6 +25,10 @@ class About extends React.Component {
     constructor(props) {
         super(props);
         this.isAlreadySelected = this.isAlreadySelected.bind(this);
+    }
+    
+    componentDidMount() {
+        //this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
     }
     
     isAlreadySelected(newRating, data, genreIndex) {
@@ -54,6 +59,10 @@ class About extends React.Component {
             this.props.setRating(newRating, this.props.movie_personal[i][j].iFromMovieData);
             this.props.selectedMovieRating(genreIndex, itemIndex, newRating);
         }
+    }
+    
+    handleClick() {
+        this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
     }
     
     render(){
@@ -105,6 +114,7 @@ class About extends React.Component {
                     >
                         {mapToState}
                     </SpringGrid >
+                    <button onClick={this.handleClick.bind(this)}>Hit</button>
                 </div>
             </div>
         );
