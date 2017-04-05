@@ -1,4 +1,5 @@
 import React from 'react';
+import 'whatwg-fetch';
 
 import { SpringGrid  } from 'react-stonecutter';
 import ReactStars from 'react-stars';
@@ -62,7 +63,50 @@ class About extends React.Component {
     }
     
     handleClick() {
-        this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
+        //this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
+        fetch('https://moon-test-heroku.herokuapp.com/users/signup', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, application/xml, text/plain, text/html, X-www-form-urlencoded, *.*',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({
+                id: 'Hubot',
+                pw: '12345',
+            })
+        })
+        .then((response) => {
+            if(!response.ok){
+                throw Error(response.statusText);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(JSON.stringify(data));
+        })
+        .catch((error) => console.log(error));
+    }
+    
+    handleClick2(){
+        fetch('https://moon-test-heroku.herokuapp.com/users/list', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+            }
+        })
+        .then((response) => {
+            if(!response.ok){
+                throw Error(response.statusText);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(JSON.stringify(data));
+        })
+        .catch((error) => console.log(error));
     }
     
     render(){
@@ -115,6 +159,7 @@ class About extends React.Component {
                         {mapToState}
                     </SpringGrid >
                     <button onClick={this.handleClick.bind(this)}>Hit</button>
+                    <button onClick={this.handleClick2.bind(this)}>Hit</button>
                 </div>
             </div>
         );
