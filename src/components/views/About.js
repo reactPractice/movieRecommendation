@@ -1,5 +1,6 @@
 import React from 'react';
 import 'whatwg-fetch';
+import Cookie from 'react-cookie';
 
 import { SpringGrid  } from 'react-stonecutter';
 import ReactStars from 'react-stars';
@@ -25,11 +26,37 @@ class About extends React.Component {
     
     constructor(props) {
         super(props);
+        this.state = {
+            userData: 1
+        }
         this.isAlreadySelected = this.isAlreadySelected.bind(this);
     }
     
+    componentWillMount() {
+        /*
+        const userData = localStorage.userData;
+        if(userData) {
+          this.setState({
+            userData: JSON.parse(userData)
+          });
+        }*/
+    }
+  
     componentDidMount() {
+        console.log('about/cookie:' + Cookie.load('isLoggedIn'));
         //this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
+    }
+    
+    componentDidUpdate(prevProps, prevState) {
+        /*
+        if(JSON.stringify(prevProps.userData) != JSON.stringify(this.state.userData)) {
+          localStorage.userData = JSON.stringify(this.state.userData);
+        }
+        */
+    }
+    
+    componentWillReceiveProps(nextProps, nextState) {
+        console.log('about/cookie:' + Cookie.load('isLoggedIn'));
     }
     
     isAlreadySelected(newRating, data, genreIndex) {
@@ -107,6 +134,8 @@ class About extends React.Component {
             console.log(JSON.stringify(data));
         })
         .catch((error) => console.log(error));
+        
+        this.setState({userData: this.state.userData + 1});
     }
     
     render(){

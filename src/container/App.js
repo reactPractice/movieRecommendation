@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Cookie from 'react-cookie';
 
 import '../style/App.css';
 
@@ -17,7 +18,8 @@ class App extends React.Component {
       data: {},
       //activeKey: 1,
       mssg: '',
-      i: 0
+      i: 0,
+      userData: 'a'
     };
     
     this.switchView = this.switchView.bind(this);
@@ -31,13 +33,6 @@ class App extends React.Component {
   
   changeMssg(mssg) {
     this.setState({mssg: mssg});
-  }
-  
-  componentWillMount() {
-    console.log('data[0]:' + this.props.data[0]);
-    console.log('data[1]:' + this.props.data[1]);
-    console.log('data[2]:' + this.props.data[2]);
-    console.log('page:' + this.props.page);
   }
   
   componentDidMount() {

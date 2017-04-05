@@ -104,9 +104,6 @@ class Movies extends React.Component {
         this.props.fetchData('https://api.themoviedb.org/3/discover/movie?api_key=' + RESOURCES.KEY + 
         '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=' + 
         this.props.page[this.props.currentIndex].page + '&with_genres=' + this.props.genre);
-        //console.log(JSON.stringify(this.props.page));
-        //console.log('currentIndex:' + this.props.currentIndex);
-        //console.log('page[' + this.props.currentIndex + '] : ' + this.props.page[this.props.currentIndex].page);
     }
     
     render() {
