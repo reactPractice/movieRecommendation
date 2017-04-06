@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import App from './container/App';
+import Login from './components/views/Login';
 
 import './style/index.css';
 
@@ -15,7 +16,7 @@ const store = createStore(reducers, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    {localStorage.getItem('isLoggedIn')  ? <App /> : <Login />}
   </Provider>,
   document.getElementById('root')
 );
