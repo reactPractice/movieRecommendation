@@ -71,7 +71,7 @@ body {
 	font-weight: 200;
 }
 
-.formFade { 
+.formFade, .pFade { 
 	opacity: 0;
 	-webkit-transition: opacity .5s ease-in-out;
     -moz-transition: opacity .5s ease-in-out;
@@ -81,7 +81,7 @@ body {
 }
 
 form {
-	padding: 20px 0;
+	padding: 0px;
 	position: relative;
 	z-index: 2;
 }
@@ -133,6 +133,19 @@ button:hover {
 	background-color: rgb(245, 247, 249);
 }
 
+p {
+	padding-top: 3px;
+	font-size: .95em;
+}
+
+span {
+	text-decoration: underline;
+}
+
+span:hover {
+	cursor: pointer;
+}
+
 .bg-bubbles {
 	position: absolute;
 	top: 0;
@@ -151,7 +164,7 @@ button:hover {
 	width:30px;
 	margin:0px auto;
 	position:relative;
-	top:50px;
+	top:60px;
 	-webkit-animation: rotation 1.0s infinite linear;
 	-moz-animation: rotation 1.0s infinite linear;
 	-o-animation: rotation 1.0s infinite linear;
