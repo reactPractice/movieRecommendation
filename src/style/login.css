@@ -146,6 +146,24 @@ span:hover {
 	cursor: pointer;
 }
 
+label {
+	font-weight:normal;
+	position:absolute;
+	transform:translateY(11px);
+	left:43.65%;
+	color: white;
+	transition:all 0.25s ease;
+	-webkit-backface-visibility: hidden;
+	pointer-events: none;
+	font-size:17px;
+}
+
+.active {
+	transform:translateY(50px);
+	left:30%;
+    font-size:14px;
+}
+
 .bg-bubbles {
 	position: absolute;
 	top: 0;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { default as Fade } from 'react-fade';
+import update from 'react-addons-update';
 import 'whatwg-fetch';
 
 import '../../style/login.css';
-import SignUp from './SignUp';
 
 const fadeDuration = 1;
 
@@ -15,15 +15,25 @@ class Login extends React.Component {
         isLoading: false,
         username: '',
         password: '',
-        signup: false
+        signup: false,
+        signUpId: '',
+        signUpPw: '',
+        labelClass: ''
       };
       
       this.login = this.login.bind(this);
-      this.handleChange = this.handleChange.bind(this);
+      this.handleChange_login = this.handleChange_login.bind(this);
+      this.handleChange_signup = this.handleChange_signup.bind(this);
       this.handleToggle = this.handleToggle.bind(this);
     }
     
-    handleChange(e) {
+    handleChange_login(e) {
+      let userInfo = {};
+      userInfo[e.target.name] = e.target.value;
+      this.setState(userInfo);
+    }
+    
+    handleChange_signup(e) {
       let userInfo = {};
       userInfo[e.target.name] = e.target.value;
       this.setState(userInfo);
@@ -65,7 +75,14 @@ class Login extends React.Component {
     render() {
         
         const SignUp = (
-          <div clasName="container">
+          <div className="container">
+            <form onSubmit={this.login} className="signupForm">
+              <label className={this.state.signUpId ? 'active' : null}>Username</label>
+        			<input name="signUpId" type="text" value={this.state.signUpId} onChange={this.handleChange_signup}/><br/>
+        			<label className={this.state.signUpPw ? 'active' : null}>Password</label>
+        			<input name="signUpPw" type="password" value={this.state.signUpPw} onChange={this.handleChange_signup}/><br/>
+        			<button type="submit" id="login-button">Login</button>
+            </form>
           </div>
         );
         
@@ -74,8 +91,8 @@ class Login extends React.Component {
             <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Welcome</h1>
             {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}
               <form onSubmit={this.login} className={this.state.isLoading==true ? 'formFade' : null}>
-          			<input name="username" type="text" value={this.state.username} onChange={this.handleChange} placeholder="Username" />
-          			<input name="password" type="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
+          			<input name="username" type="text" value={this.state.username} onChange={this.handleChange_login} placeholder="Username" />
+          			<input name="password" type="password" value={this.state.password} onChange={this.handleChange_login} placeholder="Password" />
           			<button type="submit" id="login-button">Login</button>
               </form>
               <p className={this.state.isLoading==true ? 'pFade' : null}>아직 회원이 아니신가요? <span onClick={this.handleToggle}>회원가입</span></p>
