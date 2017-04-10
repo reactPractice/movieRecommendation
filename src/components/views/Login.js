@@ -2,6 +2,7 @@ import React from 'react';
 import { default as Fade } from 'react-fade';
 import update from 'react-addons-update';
 import 'whatwg-fetch';
+import $ from 'jquery';
 
 import '../../style/login.css';
 
@@ -17,11 +18,11 @@ class Login extends React.Component {
         password: '',
         signup: false,
         signUpId: '',
-        signUpPw: '',
-        labelClass: ''
+        signUpPw: ''
       };
       
       this.login = this.login.bind(this);
+      this.signUp = this.signUp.bind(this);
       this.handleChange_login = this.handleChange_login.bind(this);
       this.handleChange_signup = this.handleChange_signup.bind(this);
       this.handleToggle = this.handleToggle.bind(this);
@@ -72,16 +73,61 @@ class Login extends React.Component {
       //localStorage.setItem('isLoggedIn', 'yes');
     }
     
+    signUp(e) {
+      e.preventDefault();
+      this.setState({ isLoading: true });
+      console.log(this.state.signUpId, this.state.signUpPw);
+      let user = {
+        id: this.state.signUpId,
+        pw: this.state.signUpPw
+      };
+      //user.id = this.state.signUpId;
+      //user.pw = this.state.signUpPw;
+      /*
+      fetch('https://moon-test-heroku.herokuapp.com/users/signup', {
+        method: 'POST',
+        body: user
+       
+          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8
+          
+        }
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(JSON.stringify(data));
+      })
+      .then(() => {
+        this.setState({ isLoading: false, signup: false, signUpId: '', signUpPw: '' });
+      })
+      .catch(function(error) {console.error(error)});
+      */
+      
+      $.ajax({
+        url: 'https://moon-test-heroku.herokuapp.com/users/signup',
+        type: 'POST',
+        data: user,
+        success: function(data) {
+          console.log(JSON.stringify(data));
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    }
+    
     render() {
         
         const SignUp = (
           <div className="container">
-            <form onSubmit={this.login} className="signupForm">
+            <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Creating a new account</h1>
+            {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}
+            <form onSubmit={this.signUp} className={this.state.isLoading==true ? 'formFade' : null}>
               <label className={this.state.signUpId ? 'active' : null}>Username</label>
-        			<input name="signUpId" type="text" value={this.state.signUpId} onChange={this.handleChange_signup}/><br/>
+        			<input name="signUpId" type="text" value={this.state.signUpId} onChange={this.handleChange_signup} required/><br/>
         			<label className={this.state.signUpPw ? 'active' : null}>Password</label>
-        			<input name="signUpPw" type="password" value={this.state.signUpPw} onChange={this.handleChange_signup}/><br/>
-        			<button type="submit" id="login-button">Login</button>
+        			<input name="signUpPw" type="password" value={this.state.signUpPw} onChange={this.handleChange_signup} required/><br/>
+        			<button type="submit" id="login-button">Sign Up</button>
             </form>
           </div>
         );
