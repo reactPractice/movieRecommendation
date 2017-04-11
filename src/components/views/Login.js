@@ -53,7 +53,7 @@ class Login extends React.Component {
       
       fetch('https://moon-test-heroku.herokuapp.com/users/list', {
         method: 'GET',
-        body: user
+        //body: user
       })
       .then((response) => response.json())
       .then((data) => {
@@ -76,50 +76,58 @@ class Login extends React.Component {
     signUp(e) {
       e.preventDefault();
       this.setState({ isLoading: true });
-      console.log(this.state.signUpId, this.state.signUpPw);
       let user = {
         id: this.state.signUpId,
         pw: this.state.signUpPw
       };
-      //user.id = this.state.signUpId;
-      //user.pw = this.state.signUpPw;
-      /*
-      fetch('https://moon-test-heroku.herokuapp.com/users/signup', {
-        method: 'POST',
-        body: user
-       
-          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8
-          
-        }
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(JSON.stringify(data));
-      })
-      .then(() => {
-        this.setState({ isLoading: false, signup: false, signUpId: '', signUpPw: '' });
-      })
-      .catch(function(error) {console.error(error)});
-      */
+      
+      //Check if there's the same username that was already chosen
+      let bool = false;
       
       $.ajax({
-        url: 'https://moon-test-heroku.herokuapp.com/users/signup',
-        type: 'POST',
-        data: user,
+        url:'https://moon-test-heroku.herokuapp.com/users/list',
+        type:'GET',
         success: function(data) {
-          console.log(JSON.stringify(data));
+          for(let i=0; i<data.length; i++) {
+            if(data[i].id == user.id) {
+              bool = true;
+              break;
+            }
+          }
         },
         error: function(error) {
           console.error(error);
         }
-      });
+      })
+      .done(() => {
+        console.log('아이디 중복?' + bool);
+        if(!bool) {
+          let success = false;
+          $.ajax({
+            url: 'https://moon-test-heroku.herokuapp.com/users/signup',
+            type: 'POST',
+            data: user,
+            success: function(data) {
+              success = true;
+            },
+            error: function(error) {
+              console.error(error);
+            }
+          })
+          .done(() => this.setState({ signup: false, isLoading: false }))
+          .fail(() => this.setState({isLoading: false}));
+        }else{
+          this.setState({ isLoading: false });
+        }
+      })
+      .done(() => console.log(this.state.signup));
     }
     
     render() {
         
         const SignUp = (
           <div className="container">
+            <button className="back glyphicon glyphicon-menu-left" onClick={() => {this.setState({signup: false})}}></button>
             <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Creating a new account</h1>
             {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}
             <form onSubmit={this.signUp} className={this.state.isLoading==true ? 'formFade' : null}>
