@@ -67,10 +67,10 @@ class Login extends React.Component {
       .then(() => {
         if(this.state.isLoading == true) {
           this.setState({ isLoading: false, password: '' });
+          localStorage.setItem('isLoggedIn', 'yes');
         }
       })
       .catch(function(error) {console.error(error)});
-      //localStorage.setItem('isLoggedIn', 'yes');
     }
     
     signUp(e) {

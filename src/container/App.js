@@ -69,7 +69,7 @@ class App extends React.Component {
                    </section>  
                 </div>
                 <div className="page" id="p2">
-                  <div className="container">
+                  <div className="container" id="p2-top">
                     <div className="row">
                       <div className="col-md-9">
                           <Home movieData={this.props.movieData} getMovies={this.props.getMovies} setRating={this.props.setRating} 
@@ -105,7 +105,7 @@ class App extends React.Component {
                   </div>
                 </div>
                 <div className="page" id="p3">
-                  <div className="container">
+                  <div className="container" id="p3-top">
                       <About msg='About2.js' movie_personal={this.props.movie_personal} currentIndex={this.props.currentIndex}
                       selectedMovie={this.props.selectedMovie} selectedMovieRating={this.props.selectedMovieRating} movieData={this.props.movieData}
                       setRating={this.props.setRating} fetchtest={this.props.fetchtest}/>
@@ -125,6 +125,7 @@ class App extends React.Component {
                   <section className="icon glyphicon glyphicon-road">
                     <span className="title">More</span>
                     <p className="hint">
+                      <button onClick={() => {localStorage.removeItem('isLoggedIn')}}/>
                       <span>You love one page & CSS only stuff? </span><br/>
                       <a href="http://codepen.io/hrtzt/details/pgXMYb/" target="_blank">check this pen "Pure CSS One page vertical navigation"</a>
                     </p>
