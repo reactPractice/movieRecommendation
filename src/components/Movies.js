@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SpringGrid  } from 'react-stonecutter';
 import ReactStars from 'react-stars';
 import ReactTooltip from 'react-tooltip';
+import $ from 'jquery';
 
 import * as RESOURCES from '../resources/API_KEY';
 import '../style/Movies.css';
@@ -165,20 +166,6 @@ class Movies extends React.Component {
                     <button className="btn myBtn" onClick={() => this.loadMoreData()}>더 많은 영화보기</button>
                     </SpringGrid >
             </div>
-            /*
-            <div className="a container">
-                하하하하하:{JSON.stringify(this.props.movieData)}
-                <button className="a" onClick={() => {console.log(JSON.stringify(this.props.data))}}>click me</button>
-            </div>*/
-                    /*
-                <InfiniteScroll
-                    //next={this.props.fetchData('https://api.themoviedb.org/3/discover/movie?api_key=' + RESOURCES.KEY + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=' + this.props.page + '&with_genres=' + this.props.genre)}
-                    //next={console.log('scroll is end')}
-                    next={this.fetchData()}
-                    hasMore={true}
-                    loader={<h4>Loading...</h4>}
-                >
-                </InfiniteScroll>*/
         );
     }
 }

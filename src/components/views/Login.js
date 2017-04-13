@@ -70,6 +70,7 @@ class Login extends React.Component {
           localStorage.setItem('isLoggedIn', 'yes');
         }
       })
+      .then(() => window.location.href="/")
       .catch(function(error) {console.error(error)});
     }
     
@@ -123,10 +124,23 @@ class Login extends React.Component {
       .done(() => console.log(this.state.signup));
     }
     
+    test() {
+      $.ajax({
+        url:'https://moon-test-heroku.herokuapp.com/users/list',
+        type:'GET',
+        success: function(data) {
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    }
+    
     render() {
         
         const SignUp = (
           <div className="container">
+            <button onClick={this.test.bind(this)}>TEST</button>
             <button className="back glyphicon glyphicon-menu-left" onClick={() => {this.setState({signup: false})}}></button>
             <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Creating a new account</h1>
             {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}
