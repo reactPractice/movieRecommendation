@@ -125,14 +125,25 @@ class Login extends React.Component {
     }
     
     test() {
-      $.ajax({
-        url:'https://moon-test-heroku.herokuapp.com/users/list',
-        type:'GET',
-        success: function(data) {
-        },
-        error: function(error) {
-          console.error(error);
-        }
+      let state = {
+        id: 'pewpew',
+        original_title: 'logan',
+        rating: 3,
+        img: 'test.jpg',
+        test: 'hi'
+      };
+      $.post('https://moon-test-heroku.herokuapp.com/insert/favorite/movie', state, function(data, status){
+        console.log(JSON.stringify(data));
+      });
+    }
+    
+    testupdate() {
+      let state = {
+        id: '58f277bd8c32a100040fa68f',
+        title:'hello world'
+      };
+      $.post('https://moon-test-heroku.herokuapp.com/update/favorite/movie', state, function(data, status){
+        console.log(JSON.stringify(data));
       });
     }
     
@@ -141,6 +152,7 @@ class Login extends React.Component {
         const SignUp = (
           <div className="container">
             <button onClick={this.test.bind(this)}>TEST</button>
+            <button onClick={this.testupdate.bind(this)}>UPDATE</button>
             <button className="back glyphicon glyphicon-menu-left" onClick={() => {this.setState({signup: false})}}></button>
             <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Creating a new account</h1>
             {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}
