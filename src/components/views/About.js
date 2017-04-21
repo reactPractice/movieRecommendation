@@ -44,7 +44,7 @@ class About extends React.Component {
     }
   
     componentDidMount() {
-        console.log('about/cookie:' + Cookie.load('isLoggedIn'));
+        console.log('about/cookie:' + Cookie.load('loginId'));
         //this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
     }
     
@@ -57,7 +57,7 @@ class About extends React.Component {
     }
     
     componentWillReceiveProps(nextProps, nextState) {
-        console.log('about/cookie:' + Cookie.load('isLoggedIn'));
+        console.log('about/cookie:' + Cookie.load('loginId'));
     }
     
     isAlreadySelected(newRating, data, genreIndex) {

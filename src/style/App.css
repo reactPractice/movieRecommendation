@@ -157,6 +157,7 @@ a {
 }
 
 .mssg {
+  text-decoration: none;
   position: fixed;
   left:3%;
 }

@@ -57,6 +57,7 @@ class Login extends React.Component {
       })
       .then((response) => response.json())
       .then((data) => {
+        console.log(JSON.stringify(data));
         return (data.map((item, i) => {
           if(user.id == item.id && user.pw == item.pw) {
             console.log('yes');
@@ -67,10 +68,14 @@ class Login extends React.Component {
       .then(() => {
         if(this.state.isLoading == true) {
           this.setState({ isLoading: false, password: '' });
-          localStorage.setItem('isLoggedIn', 'yes');
+          //console.log('로그인성공');
+          //localStorage.setItem('loginId', user.id);
+        }else{
+          localStorage.setItem('loginId', user.id);
+          window.location.href="/";
         }
       })
-      .then(() => window.location.href="/")
+      //.then(() => window.location.href="/")
       .catch(function(error) {console.error(error)});
     }
     
@@ -126,7 +131,7 @@ class Login extends React.Component {
     
     test() {
       let state = {
-        id: 'pewpew',
+        id: 'ori',
         original_title: 'logan',
         rating: 3,
         img: 'test.jpg',
@@ -139,12 +144,26 @@ class Login extends React.Component {
     
     testupdate() {
       let state = {
-        id: '58f277bd8c32a100040fa68f',
-        title:'hello world'
+        username:'pewpew',
+        data_original: 'aaa',
+        data_update: 'hello world'
       };
       $.post('https://moon-test-heroku.herokuapp.com/update/favorite/movie', state, function(data, status){
         console.log(JSON.stringify(data));
       });
+    }
+    
+    push() {
+      /*
+      let state = {
+        username: 'pewpew',
+        title: 'new test'
+      };
+      
+      $.post('https://moon-test-heroku.herokuapp.com/push/favorite/movie', state, function(data, status){
+        console.log(JSON.stringify(data));
+      });
+      */
     }
     
     render() {
@@ -152,7 +171,8 @@ class Login extends React.Component {
         const SignUp = (
           <div className="container">
             <button onClick={this.test.bind(this)}>TEST</button>
-            <button onClick={this.testupdate.bind(this)}>UPDATE</button>
+            <button onClick={this.testupdate.bind(this)}>UPDATE</button><br/>
+            <button onClick={this.push.bind(this)}>데이터추가</button>
             <button className="back glyphicon glyphicon-menu-left" onClick={() => {this.setState({signup: false})}}></button>
             <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Creating a new account</h1>
             {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}

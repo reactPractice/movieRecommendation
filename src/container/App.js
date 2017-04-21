@@ -125,7 +125,7 @@ class App extends React.Component {
                   <section className="icon glyphicon glyphicon-road">
                     <span className="title">More</span>
                     <p className="hint">
-                      <button onClick={() => {localStorage.removeItem('isLoggedIn')}}/>
+                      <button onClick={() => {localStorage.removeItem('loginId')}}/>
                       <span>You love one page & CSS only stuff? </span><br/>
                       <a href="http://codepen.io/hrtzt/details/pgXMYb/" target="_blank">check this pen "Pure CSS One page vertical navigation"</a>
                     </p>

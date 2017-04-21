@@ -16,7 +16,7 @@ const store = createStore(reducers, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    {localStorage.getItem('isLoggedIn')  ? <App /> : <Login />}
+    {localStorage.getItem('loginId')  ? <App /> : <Login />}
   </Provider>,
   document.getElementById('root')
 );

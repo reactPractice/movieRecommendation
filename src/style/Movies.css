@@ -40,3 +40,7 @@ li {
     background-color: #86E57F;
     transition: .5s
 }
+
+.tip {
+    text-decoration: none;
+}
