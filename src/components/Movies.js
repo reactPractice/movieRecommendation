@@ -119,7 +119,7 @@ class Movies extends React.Component {
                 title: data.original_title,
                 rating: newRating,
                 img: data.poster_path,
-                genre: this.props.genre,
+                genre: this.state.genre,
                 isThisFirstTimeToMakeId: true
             };
             /*
@@ -144,16 +144,18 @@ class Movies extends React.Component {
                     let nextState = {};
                     
                     //별점을 누른 영화가 이미 사용자가 선택한 적이 있는 영화인지 검색
-                    for(let i=0; i<data.movies.length-1; i++) {
+                    
+                    for(let i=0; i<data.movies.length; i++) {
                         if(data.movies[i].title == state.title) {
                             bool = true;
                             nextState.username = data.id;
                             nextState.title = data.movies[i].title;
                             nextState.newRating = newRating;
-                            break;
                         }
+                        if(bool) break;
                     }
                     
+                
                     //영화가 이미 등록된 적이 있는 경우
                     if(bool) {
                         $.post('https://moon-test-heroku.herokuapp.com/update/favorite/movie', nextState, function(result, stats){
@@ -161,11 +163,17 @@ class Movies extends React.Component {
                         });
                     }else{
                         //그렇지 않은 경우는 해당 영화에 대한 정보를 등록한다.
+                        //this.setState({isThisFirstTimeToMakeId: false})
+                        console.log('변경 전 값:' + state.isThisFirstTimeToMakeId);
                         state.isThisFirstTimeToMakeId = false;
-                        $.post('https://moon-test-heroku.herokuapp.com/insert/favorite/movie', state, function(result,stats){
-                            console.log('Create ID & Update is done');
-                        });
+                        console.log('변경 후 값:' + state.isThisFirstTimeToMakeId);
+                        //.then(() => { 
+                            $.post('https://moon-test-heroku.herokuapp.com/insert/favorite/movie', state, function(result,stats){
+                                console.log('Create ID & Update is done');
+                            });
+                       // });
                     }
+                    
                 }
             });
             /*
