@@ -4,6 +4,8 @@ import { SpringGrid  } from 'react-stonecutter';
 import ReactStars from 'react-stars';
 import ReactTooltip from 'react-tooltip';
 import $ from 'jquery';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 import * as RESOURCES from '../resources/API_KEY';
 import '../style/Movies.css';
@@ -14,7 +16,9 @@ const propTypes = {
     getMovies: React.PropTypes.func,
     nextPage: React.PropTypes.func,
     movie_personal: React.PropTypes.array,
-    genre: React.PropTypes.number
+    genre: React.PropTypes.number,
+    currentIndex: React.PropTypes.number,
+    movieRatingHeroku: React.PropTypes.func
 };
 
 const defaultProps = {
@@ -23,7 +27,9 @@ const defaultProps = {
     page: [],
     getMovies: () => {console.error('getMovies is not defined.')},
     nextPage: () => {console.error('nextPage is not defined.')},
-    genre: 28
+    genre: 28,
+    currentIndex: 0,
+    movieRatingHeroku: () => {console.error('movieRatingHeroku is not defined.')}
 };
 
 class Movies extends React.Component {
@@ -74,6 +80,12 @@ class Movies extends React.Component {
     componentDidMount() {
         //this.props.fetchData('https://api.themoviedb.org/3/discover/movie?api_key=' + RESOURCES.KEY + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=' + this.props.page + '&with_genres=' + this.props.genre);
         this.loadMoreData();
+        $.post('https://moon-test-heroku.herokuapp.com/findUser/favorite/movie', {id: localStorage.getItem('loginId')}, function(data, status){
+            for(let i=0; i<data.movies.length; i++) {
+                //this.props.movieRatingHeroku(data.movies[i].genre, data.movies[i].rating, data.movies[i].index);
+            }
+            //console.log(JSON.stringify(this.props.rating));
+        });
     }
     
     componentWillReceiveProps(nextProps) {
@@ -105,10 +117,6 @@ class Movies extends React.Component {
         this.props.fetchData('https://api.themoviedb.org/3/discover/movie?api_key=' + RESOURCES.KEY + 
         '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=' + 
         this.props.page[this.props.currentIndex].page + '&with_genres=' + this.props.genre);
-        
-        $.ajax({
-            url: ''
-        });
     }
     
     render() {
@@ -119,21 +127,14 @@ class Movies extends React.Component {
                 title: data.original_title,
                 rating: newRating,
                 img: data.poster_path,
-                genre: this.state.genre,
+                genre: this.props.currentIndex,
+                index: i,
                 isThisFirstTimeToMakeId: true
             };
-            /*
-            state = data;
-            state.stars = newRating;
-            state.iFromMovieData = i;
-            state.genre = this.props.genre;
-            */
+            console.log('genre:' + state.genre);
             
-            this.props.setRating(newRating, i);
-            /*
-            this.props.selectedMovie(data, this.props.currentIndex);
-            */
-            //this.props.moviePersonal(state, this.props.currentIndex);
+            //this.props.setRating(newRating, i);
+            
             $.post('https://moon-test-heroku.herokuapp.com/findUser/favorite/movie', {id: localStorage.getItem('loginId')}, function(data, status){
                 if(data == null || data.length == 0 || data == undefined || data==0) {
                     $.post('https://moon-test-heroku.herokuapp.com/insert/favorite/movie', state, function(result, stats){
@@ -146,6 +147,7 @@ class Movies extends React.Component {
                     //별점을 누른 영화가 이미 사용자가 선택한 적이 있는 영화인지 검색
                     
                     for(let i=0; i<data.movies.length; i++) {
+                        //this.props.herokuRating(data.movies[i].genre, data.movies[i].rating, data.movies[i].index);
                         if(data.movies[i].title == state.title) {
                             bool = true;
                             nextState.username = data.id;
@@ -155,6 +157,7 @@ class Movies extends React.Component {
                         if(bool) break;
                     }
                     
+                    //console.log(JSON.stringify(this.props.rating));
                 
                     //영화가 이미 등록된 적이 있는 경우
                     if(bool) {
@@ -175,19 +178,8 @@ class Movies extends React.Component {
                     }
                     
                 }
-            });
-            /*
-            $.ajax({
-                url: 'https://moon-test-heroku.herokuapp.com/insert/favorite/movie',
-                type: 'POST',
-                data: state,
-                success: function(data) {
-                    console.log(JSON.stringify(data));
-                },
-                error: function(error) {
-                  console.error(error);
-                }
-            })*/
+            })
+            .done(() => this.props.loadData());
         };
         
         const mapToState = this.props.movieData[this.props.currentIndex].map((data, i) => {

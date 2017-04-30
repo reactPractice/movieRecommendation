@@ -8,8 +8,6 @@ import Home from '../components/views/Home';
 import About from '../components/views/About';
 import * as actions from '../actions';
 
-import Test from './Test';
-
 class App extends React.Component {
   
   constructor(props){
@@ -43,6 +41,9 @@ class App extends React.Component {
     //this.props.emptyMovies(this.props.currentIndex);
     this.props.movieGenre(genreId, index);
     this.setState({i:index});
+    //console.log(JSON.stringify(this.props.rating));
+    //this.props.herokuRating(index,1,2);
+    console.log('done');
   }
   
   render() {
@@ -76,6 +77,7 @@ class App extends React.Component {
                           nextPage={this.props.nextPage} page={this.props.page} genre={this.props.genre} emptyMovies={this.props.emptyMovies}
                           fetchData={this.props.fetchData} data={this.props.data} currentIndex={this.props.currentIndex}
                           rating={this.props.rating} selectedMovie={this.props.selectedMovie} movie_personal={this.props.movie_personal}
+                          loadData={this.props.loadData}
                           />
                       </div>
                       <div className="col-md-1" id='cssvmenu'>
@@ -118,7 +120,6 @@ class App extends React.Component {
                       <a href="https://dribbble.com/albertohartzet" target="_blank">Im ready to play, <span className="hint line-trough">invite me </span> find me</a>
                     </p>
                     <p className="hint">Already invited by <a href="http://www.dribbble.com/mrpeters" target="_blank">Stan Peters</a></p>
-                    <Test />
                   </section>
                 </div> 
                 <div className="page" id="p5">
@@ -148,7 +149,7 @@ const mapStateToProps = (state) => {
     data: state.movieInfo.data,
     currentIndex: state.movieInfo.currentIndex,
     rating: state.movieInfo.rating,
-    movie_personal: state.movieRcm.movie_personal
+    movie_personal: state.movieRcm.recMovies
   };
 };
 
@@ -162,7 +163,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchData: (url) => {dispatch(actions.fetchData(url))},
     selectedMovie: (data, currentIndex) => {dispatch(actions.moviePersonal(data, currentIndex))},
     selectedMovieRating: (genre, index, stars) => {dispatch(actions.moviePersonalRating(genre, index, stars))},
-    fetchtest: (url) => {dispatch(actions.fetchtest(url))}
+    fetchtest: (url) => {dispatch(actions.fetchtest(url))},
+    herokuRating: (currentIndex, stars, index) => {dispatch(actions.movieRatingHeroku(currentIndex, stars, index))},
+    loadData: () => {dispatch(actions.loadData())}
   };
 };
 

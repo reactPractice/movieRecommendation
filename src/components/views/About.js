@@ -1,6 +1,7 @@
 import React from 'react';
 import 'whatwg-fetch';
 import Cookie from 'react-cookie';
+import $ from 'jquery';
 
 import '../../style/About.css';
 import { SpringGrid  } from 'react-stonecutter';
@@ -28,9 +29,11 @@ class About extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userData: 1
+            userData: 1,
+            recMovies: []
         }
         this.isAlreadySelected = this.isAlreadySelected.bind(this);
+        this.loadData = this.loadData.bind(this);
     }
     
     componentWillMount() {
@@ -41,10 +44,10 @@ class About extends React.Component {
             userData: JSON.parse(userData)
           });
         }*/
+        this.loadData();
     }
   
     componentDidMount() {
-        console.log('about/cookie:' + Cookie.load('loginId'));
         //this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
     }
     
@@ -55,11 +58,11 @@ class About extends React.Component {
         }
         */
     }
-    
+    /*
     componentWillReceiveProps(nextProps, nextState) {
         console.log('about/cookie:' + Cookie.load('loginId'));
     }
-    
+    */
     isAlreadySelected(newRating, data, genreIndex) {
         let i = 0;
         let j = 0;
@@ -90,6 +93,17 @@ class About extends React.Component {
         }
     }
     
+    loadData() {
+        let recMovies = {};
+        $.post('https://moon-test-heroku.herokuapp.com/findUser/favorite/movie', {id: localStorage.getItem('loginId')}, function(data, status){
+            recMovies = data.movies;
+        })
+        .done(() => {
+            this.setState({recMovies: recMovies});
+        })
+        .done(() => console.log('rec:' + JSON.stringify(this.state.recMovies)));
+    }
+    
     render(){
         
         const ratingChanged = (newRating, i, data) => {
@@ -99,8 +113,31 @@ class About extends React.Component {
             this.isAlreadySelected(newRating, data, this.props.currentIndex);
         };
         
-        const mapToState = this.props.movie_personal.map((genre, i) => {
-            return genre.map((data, k) => {
+        const mapToState = this.props.movie_personal.map((data, i) => {
+            return (
+                    <li key={`img-${i}-${data.title}`}>
+                        <img
+                            className="img-rounded test"
+                            //onMouseOver={this.handleMouseOver.bind(this, data)}
+                            src={data.img}
+                        />
+                        <div className="rating">
+                            <ReactStars
+                                iKey={i}
+                                data={data}
+                                //value={this.props.movieData[this.props.currentIndex][i].rating}
+                                value={data.rating}
+                                count={5}
+                                //onChange={ratingChanged}
+                                size={24}
+                                color2={'#ffd700'}
+                            />
+                        </div>
+                    </li>
+                );
+        //this.props.movie_personal.map((genre, i) => {
+            //return genre.map((data, k) => {
+            /*
                 return (
                     <li key={`img-${k}-${data.original_title}`}>
                         <img
@@ -122,7 +159,8 @@ class About extends React.Component {
                         </div>
                     </li>
                 );
-            });
+            */
+            //});
         });
     
         return(
@@ -138,6 +176,7 @@ class About extends React.Component {
                         springConfig={{ stiffness: 170, damping: 26 }}
                     >
                         {mapToState}
+                        {/*{mapToState}*/}
                     </SpringGrid >
                 </div>
             </div>

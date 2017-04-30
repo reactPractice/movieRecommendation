@@ -1,4 +1,5 @@
 import * as types from './MovieInfo';
+import $ from 'jquery';
 
 export function movieInfoSimple(data){
     return {
@@ -16,6 +17,15 @@ export function movieEmpty(){
 export function movieInfoRating(stars, index){
     return {
         type: types.MOVIE_RATING,
+        stars,
+        index
+    };
+}
+
+export function movieRatingHeroku(currentIndex, stars, index){
+    return {
+        type: types.MOVIE_RATING_HEROKU,
+        currentIndex,
         stars,
         index
     };
@@ -116,11 +126,22 @@ export function fetchData(url) {
         }
 }
 
-export function moviePersonal(data, genre) {
+export function loadData() {
+    return (dispatch) => {
+        let recMovies = {};
+        $.post('https://moon-test-heroku.herokuapp.com/findUser/favorite/movie', {id: localStorage.getItem('loginId')}, function(data, status){
+            recMovies = data.movies;
+        })
+        .done(() => {
+            dispatch(moviePersonal(recMovies));
+        })
+    };
+}
+
+export function moviePersonal(data) {
     return {
         type: types.MOVIE_PERSONAL,
-        data,
-        genre
+        data
     }
 }
 

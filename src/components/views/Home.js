@@ -72,7 +72,8 @@ class Home extends React.Component {
                          <Movies getMovies={this.props.getMovies} movieData={this.props.movieData} setRating={this.props.setRating}
                             showDetail={this.showDetail} nextPage={this.props.nextPage} page={this.props.page} genre={this.props.genre}
                             emptyMovies={this.props.emptyMovies} fetchData={this.props.fetchData}  selectedMovie={this.props.selectedMovie}
-                            data={this.props.data} currentIndex={this.props.currentIndex} rating={this.props.rating}/>
+                            data={this.props.data} currentIndex={this.props.currentIndex} rating={this.props.rating} 
+                            loadData={this.props.loadData}/>
                     </div>
                 </div>
             </div>

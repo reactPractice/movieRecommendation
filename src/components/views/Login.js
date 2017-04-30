@@ -59,7 +59,7 @@ class Login extends React.Component {
       .then((data) => {
         console.log(JSON.stringify(data));
         return (data.map((item, i) => {
-          if(user.id == item.id && user.pw == item.pw) {
+          if(user.id === item.id && user.pw === item.pw) {
             console.log('yes');
             this.setState({ isLoading: false });
           }
@@ -170,9 +170,11 @@ class Login extends React.Component {
         
         const SignUp = (
           <div className="container">
+          {/*
             <button onClick={this.test.bind(this)}>TEST</button>
             <button onClick={this.testupdate.bind(this)}>UPDATE</button><br/>
             <button onClick={this.push.bind(this)}>데이터추가</button>
+          */}
             <button className="back glyphicon glyphicon-menu-left" onClick={() => {this.setState({signup: false})}}></button>
             <h1 className={this.state.isLoading==true ? 'isLoading' : null}>Creating a new account</h1>
             {this.state.isLoading==true ? <div className="spinner spinner-visible"></div> : <div className="spinner spinner-invisible"></div>}

@@ -31,7 +31,7 @@ const initialState = {
         {page:1}
     ],
     rating: [
-        [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]  
+        [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]  
     ]
 };
 
@@ -58,7 +58,7 @@ export default function movieInfo(state = initialState, action) {
                 }
             )};*/
             return {
-              ...state, movieData: [ [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],,[],[],[] ], 
+              ...state, movieData: [ [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[] ], 
               page: update(
                     state.page, {
                         [state.currentIndex]: {
@@ -75,6 +75,16 @@ export default function movieInfo(state = initialState, action) {
                         }
                     }
                 }
+            )};
+        case types.MOVIE_RATING_HEROKU:
+            return {...state, rating: update(
+                state.rating, {
+                    [action.currentIndex]: {
+                        [action.index]: {
+                            stars: {$set:action.stars}
+                        }
+                    }
+                }    
             )};
         case types.MOVIE_PAGE:
             return {...state, page: update(
