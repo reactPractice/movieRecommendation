@@ -34,6 +34,12 @@ export default function movieRcm(state = initialState, action) {
                     }
                 }
             )};
+        case types.EMPTY_PERSONAL:
+            return { ...state, recMovies: update(
+                state.recMovies, {
+                    $splice: [[0, state.recMovies.length]]
+                }    
+            )};
         default:
             return state;
     }

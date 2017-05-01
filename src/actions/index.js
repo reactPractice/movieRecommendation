@@ -132,10 +132,15 @@ export function loadData() {
         $.post('https://moon-test-heroku.herokuapp.com/findUser/favorite/movie', {id: localStorage.getItem('loginId')}, function(data, status){
             recMovies = data.movies;
         })
-        .done(() => {
-            dispatch(moviePersonal(recMovies));
-        })
+        .done(() => dispatch(emptyPersonal()))
+        .done(() => dispatch(moviePersonal(recMovies)));
     };
+}
+
+export function emptyPersonal() {
+    return {
+        type: types.EMPTY_PERSONAL
+    }
 }
 
 export function moviePersonal(data) {

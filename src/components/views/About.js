@@ -13,7 +13,8 @@ const propTypes = {
     selectedMovie: React.PropTypes.func,
     selectedMovieRating: React.PropTypes.func,
     setRating: React.PropTypes.func,
-    fetchtest: React.PropTypes.func
+    fetchtest: React.PropTypes.func,
+    loadData: React.PropTypes.func
 };
 
 const defaultProps = {
@@ -21,7 +22,8 @@ const defaultProps = {
     movie_personal: [],
     selectedMovie: () => {console.log('selectedMovie is not defined.')},
     selectedMovieRating: () => {console.log('selectedMovieRating is not defined.')},
-    setRating: () => {console.log('setRating is not defined.')}
+    setRating: () => {console.log('setRating is not defined.')},
+    loadData: () => {console.log('loadData is not defined.')}
 };
 
 class About extends React.Component {
@@ -49,6 +51,7 @@ class About extends React.Component {
   
     componentDidMount() {
         //this.props.fetchtest('https://moon-test-heroku.herokuapp.com/books');
+        this.props.loadData();
     }
     
     componentDidUpdate(prevProps, prevState) {

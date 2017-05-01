@@ -110,7 +110,7 @@ class App extends React.Component {
                   <div className="container" id="p3-top">
                       <About msg='About2.js' movie_personal={this.props.movie_personal} currentIndex={this.props.currentIndex}
                       selectedMovie={this.props.selectedMovie} selectedMovieRating={this.props.selectedMovieRating} movieData={this.props.movieData}
-                      setRating={this.props.setRating} fetchtest={this.props.fetchtest}/>
+                      setRating={this.props.setRating} fetchtest={this.props.fetchtest} loadData={this.props.loadData}/>
                   </div>
                 </div>
                 <div className="page" id="p4">
